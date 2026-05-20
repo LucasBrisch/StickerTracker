@@ -55,6 +55,8 @@ const filteredStickers = computed(() => {
     result = result.filter(s => getCount(s.code) === 0)
   } else if (selectedStatus.value === 'DUPLICATES') {
     result = result.filter(s => getCount(s.code) > 1)
+  } else if (selectedStatus.value === 'OWNED') {
+    result = result.filter(s => getCount(s.code) > 0)
   }
 
   return result
@@ -91,6 +93,13 @@ const handleUpdateSticker = (code, increment) => {
                 :class="selectedStatus === 'ALL' ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-400 hover:text-zinc-200'"
               >
                 Todas
+              </button>
+              <button 
+                @click="selectedStatus = 'OWNED'"
+                class="px-5 py-2 rounded-xl text-sm font-medium transition-all"
+                :class="selectedStatus === 'OWNED' ? 'bg-blue-500/20 text-blue-300 shadow-sm' : 'text-zinc-400 hover:text-zinc-200'"
+              >
+                Adquiridas
               </button>
               <button 
                 @click="selectedStatus = 'MISSING'"

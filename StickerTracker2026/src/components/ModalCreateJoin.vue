@@ -37,18 +37,18 @@ const handleClose = () => {
 </script>
 
 <template>
-  <div v-if="show" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-    <div class="bg-slate-900 border border-white/10 rounded-2xl p-6 w-full max-w-md shadow-2xl relative">
-      <button @click="handleClose" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors">
+  <div v-if="show" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-sm">
+    <div class="bg-zinc-900 border border-white/10 rounded-2xl p-6 w-full max-w-md shadow-2xl relative">
+      <button @click="handleClose" class="absolute top-4 right-4 text-zinc-400 hover:text-white transition-colors">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
 
-      <h2 class="text-xl font-bold text-slate-200 mb-2">
+      <h2 class="text-xl font-bold text-zinc-200 mb-2">
         {{ mode === 'create' ? 'Criar Novo Álbum' : 'Entrar em um Álbum' }}
       </h2>
-      <p class="text-sm text-slate-400 mb-6">
+      <p class="text-sm text-zinc-400 mb-6">
         {{ mode === 'create' 
           ? 'Dê um nome para a sua coleção e convide amigos depois.' 
           : 'Insira o código de 6 dígitos que você recebeu.' }}
@@ -56,7 +56,7 @@ const handleClose = () => {
 
       <form @submit.prevent="handleSubmit">
         <div class="mb-4">
-          <label class="block text-xs font-medium text-slate-400 mb-2 uppercase tracking-wider">
+          <label class="block text-xs font-medium text-zinc-400 mb-2 uppercase tracking-wider">
             {{ mode === 'create' ? 'Nome do Álbum' : 'Código de Convite' }}
           </label>
           <input 
@@ -64,8 +64,8 @@ const handleClose = () => {
             type="text" 
             :placeholder="mode === 'create' ? 'Ex: Álbum da Firma' : 'Ex: A1B2C3'"
             :class="[
-              'w-full bg-slate-950 border rounded-xl px-4 py-3 text-slate-200 placeholder:text-slate-600 focus:outline-none focus:ring-2 transition-all',
-              error ? 'border-red-500 focus:ring-red-500/50' : 'border-white/10 focus:border-fuchsia-500 focus:ring-fuchsia-500/50'
+              'w-full bg-zinc-950 border rounded-xl px-4 py-3 text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:ring-2 transition-all',
+              error ? 'border-red-500 focus:ring-red-500/50' : 'border-white/10 focus:border-green-500 focus:ring-green-500/50'
             ]"
             required
             :maxlength="mode === 'create' ? 50 : 6"
@@ -78,14 +78,14 @@ const handleClose = () => {
           <button 
             type="button"
             @click="handleClose"
-            class="flex-1 px-4 py-3 rounded-xl font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
+            class="flex-1 px-4 py-3 rounded-xl font-medium text-zinc-300 hover:text-white hover:bg-white/5 transition-colors"
           >
             Cancelar
           </button>
           <button 
             type="submit"
             :disabled="loading || !inputValue.trim()"
-            class="flex-1 px-4 py-3 rounded-xl font-medium text-white bg-gradient-to-r from-fuchsia-600 to-indigo-600 hover:from-fuchsia-500 hover:to-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-indigo-500/25 flex items-center justify-center gap-2"
+            class="flex-1 px-4 py-3 rounded-xl font-medium text-white bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-500 hover:to-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-green-500/25 flex items-center justify-center gap-2"
           >
             <svg v-if="loading" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

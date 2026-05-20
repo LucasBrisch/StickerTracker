@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar.vue'
 import StickerCard from '../components/StickerCard.vue'
 import { useStickers } from '../composables/useStickers'
 import { useAuth } from '../composables/useAuth'
+import { getCategoryName } from '../lib/categoryMap'
 
 const route = useRoute()
 const collectionId = route.params.id
@@ -65,6 +66,79 @@ const filteredStickers = computed(() => {
 const handleUpdateSticker = (code, increment) => {
   updateCount(code, increment)
 }
+
+const isCopying = ref(false)
+
+const copyToClipboard = async () => {
+  if (!catalogStickers.value.length) return
+  isCopying.value = true
+
+  let totalOwned = 0
+  let totalMissing = 0
+  let totalDuplicates = 0
+  const totalUnique = catalogStickers.value.length
+
+  const missingCategories = []
+  const duplicatesCategories = []
+  const missingByCategory = {}
+  const duplicatesByCategory = {}
+
+  catalogStickers.value.forEach(s => {
+    const count = getCount(s.code)
+    if (count === 0) {
+      totalMissing++
+      if (!missingByCategory[s.category]) {
+        missingByCategory[s.category] = []
+        missingCategories.push(s.category)
+      }
+      missingByCategory[s.category].push(s.code)
+    } else {
+      totalOwned++
+      if (count > 1) {
+        const dups = count - 1
+        totalDuplicates += dups
+        if (!duplicatesByCategory[s.category]) {
+          duplicatesByCategory[s.category] = []
+          duplicatesCategories.push(s.category)
+        }
+        
+        let text = s.code
+        if (dups > 1) {
+          text += ` (×${dups})`
+        }
+        duplicatesByCategory[s.category].push(text)
+      }
+    }
+  })
+
+  const percentage = Math.floor((totalOwned / totalUnique) * 100)
+  let text = `🏆 Copa 2026 — ❌ Faltam ${totalMissing} — 🔁 ${totalDuplicates} Repetidas — ${totalOwned}/${totalUnique} (${percentage}%)\n\n`
+
+  if (totalMissing > 0) {
+    text += `❌ Faltam\n`
+    missingCategories.forEach(cat => {
+      text += `${getCategoryName(cat)}:\n${missingByCategory[cat].join(', ')}\n\n`
+    })
+  }
+
+  if (totalDuplicates > 0) {
+    text += `🔁 Repetidas\n`
+    duplicatesCategories.forEach(cat => {
+      text += `${getCategoryName(cat)}:\n${duplicatesByCategory[cat].join(', ')}\n\n`
+    })
+  }
+
+  try {
+    await navigator.clipboard.writeText(text.trim())
+    setTimeout(() => {
+      isCopying.value = false
+    }, 2000)
+  } catch (err) {
+    console.error('Falha ao copiar: ', err)
+    isCopying.value = false
+    alert('Erro ao copiar o resumo.')
+  }
+}
 </script>
 
 <template>
@@ -117,8 +191,23 @@ const handleUpdateSticker = (code, increment) => {
               </button>
             </div>
             
-            <div class="text-xs sm:text-sm font-medium text-zinc-400 bg-zinc-900 px-4 py-2 rounded-xl border border-white/5 w-full sm:w-auto text-center">
-              Completado: <span class="text-white">{{ catalogStickers.filter(s => getCount(s.code) > 0).length }} / {{ catalogStickers.length }}</span>
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+              <div class="text-xs sm:text-sm font-medium text-zinc-400 bg-zinc-900 px-4 py-2 rounded-xl border border-white/5 w-full sm:w-auto text-center">
+                Completado: <span class="text-white">{{ catalogStickers.filter(s => getCount(s.code) > 0).length }} / {{ catalogStickers.length }}</span>
+              </div>
+              <button 
+                @click="copyToClipboard"
+                class="flex items-center justify-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white px-4 py-2 rounded-xl border border-white/5 transition-all text-sm font-medium whitespace-nowrap"
+                :title="isCopying ? 'Copiado!' : 'Copiar Resumo'"
+              >
+                <svg v-if="!isCopying" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                </svg>
+                <svg v-else class="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="hidden sm:inline">{{ isCopying ? 'Copiado!' : 'Copiar Resumo' }}</span>
+              </button>
             </div>
           </div>
 

@@ -83,41 +83,41 @@ const handleUpdateSticker = (code, increment) => {
       <div v-else>
         <!-- Filtros Principais -->
         <div class="mb-10 space-y-6">
-          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
             
             <!-- Tabs de Status -->
-            <div class="bg-zinc-900 p-1.5 rounded-2xl flex items-center border border-white/5">
+            <div class="bg-zinc-900 p-1 rounded-xl flex items-center border border-white/5 w-full sm:w-auto">
               <button 
                 @click="selectedStatus = 'ALL'"
-                class="px-5 py-2 rounded-xl text-sm font-medium transition-all"
+                class="flex-1 sm:flex-initial px-3 sm:px-5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all text-center"
                 :class="selectedStatus === 'ALL' ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-400 hover:text-zinc-200'"
               >
                 Todas
               </button>
               <button 
                 @click="selectedStatus = 'OWNED'"
-                class="px-5 py-2 rounded-xl text-sm font-medium transition-all"
+                class="flex-1 sm:flex-initial px-3 sm:px-5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all text-center"
                 :class="selectedStatus === 'OWNED' ? 'bg-blue-500/20 text-blue-300 shadow-sm' : 'text-zinc-400 hover:text-zinc-200'"
               >
                 Adquiridas
               </button>
               <button 
                 @click="selectedStatus = 'MISSING'"
-                class="px-5 py-2 rounded-xl text-sm font-medium transition-all"
+                class="flex-1 sm:flex-initial px-3 sm:px-5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all text-center"
                 :class="selectedStatus === 'MISSING' ? 'bg-yellow-500/20 text-yellow-300 shadow-sm' : 'text-zinc-400 hover:text-zinc-200'"
               >
                 Faltantes
               </button>
               <button 
                 @click="selectedStatus = 'DUPLICATES'"
-                class="px-5 py-2 rounded-xl text-sm font-medium transition-all"
+                class="flex-1 sm:flex-initial px-3 sm:px-5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all text-center"
                 :class="selectedStatus === 'DUPLICATES' ? 'bg-green-500/20 text-green-300 shadow-sm' : 'text-zinc-400 hover:text-zinc-200'"
               >
                 Repetidas
               </button>
             </div>
             
-            <div class="text-sm font-medium text-zinc-400 bg-zinc-900 px-4 py-2 rounded-xl border border-white/5">
+            <div class="text-xs sm:text-sm font-medium text-zinc-400 bg-zinc-900 px-4 py-2 rounded-xl border border-white/5 w-full sm:w-auto text-center">
               Completado: <span class="text-white">{{ catalogStickers.filter(s => getCount(s.code) > 0).length }} / {{ catalogStickers.length }}</span>
             </div>
           </div>

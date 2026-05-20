@@ -12,93 +12,70 @@ defineProps({
 
 const emit = defineEmits(['update'])
 
-const handleIncrement = () => {
-  emit('update', 1)
-}
-
-const handleDecrement = () => {
-  emit('update', -1)
-}
+const handleIncrement = () => emit('update', 1)
+const handleDecrement = () => emit('update', -1)
 </script>
 
 <template>
   <div
-    class="relative group rounded-2xl p-[1px] transition-all duration-300"
+    class="relative group bg-white border-4 border-black p-1.5 transition-all duration-150 transform-gpu"
     :class="[
-      sticker.shiny
-        ? 'bg-gradient-to-br from-yellow-300 via-yellow-400 to-green-500 shadow-lg shadow-yellow-500/10'
-        : 'bg-white/10'
+      count > 0 
+        ? 'shadow-[6px_6px_0px_#000] hover:-translate-y-2 hover:-translate-x-1 hover:shadow-[10px_10px_0px_#ff003c]' 
+        : 'opacity-50 border-dashed border-gray-400 bg-gray-100 hover:opacity-100 hover:border-solid hover:border-black shadow-none hover:shadow-[6px_6px_0px_#000]'
     ]"
   >
-    <div class="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-20 transition-opacity rounded-2xl"
-         :class="sticker.shiny ? 'from-white to-transparent' : ''"></div>
-    
-    <div class="h-full bg-zinc-900 rounded-[15px] p-4 relative overflow-hidden flex flex-col justify-between"
-         :class="count > 0 ? 'border border-green-500/30' : 'border border-transparent'">
+    <div class="h-full bg-white border-4 border-black relative overflow-hidden flex flex-col justify-between"
+         :class="count > 0 ? (sticker.shiny ? 'bg-[#ffcf00]' : 'bg-[#00e5ff]') : 'bg-gray-100'">
       
-      <div v-if="sticker.shiny" class="absolute -inset-full top-0 z-0 block h-full w-1/2 -skew-x-12 transform bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:animate-shine"></div>
-
-      <div class="relative z-10 flex items-start justify-between mb-4">
-        <span class="text-xl font-black tracking-tight"
-              :class="sticker.shiny ? 'text-transparent bg-clip-text bg-gradient-to-br from-yellow-200 to-yellow-500 drop-shadow-sm' : 'text-zinc-200'">
-          {{ sticker.code }}
-        </span>
-
-        <span v-if="sticker.shiny" class="text-xl animate-pulse">✨</span>
-      </div>
-
-      <div class="relative z-10 mb-4">
-        <div class="text-[10px] font-bold tracking-wider uppercase text-zinc-500 mb-1">
-          {{ sticker.category }}
-        </div>
-
-        <div class="min-h-[24px]">
-          <span
-            v-if="sticker.is_squad"
-            class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-blue-500/10 text-blue-400 border border-blue-500/20"
-          >
-            Squad
+      <!-- Inside padding -->
+      <div class="p-3 flex flex-col h-full z-10 relative">
+        <div class="flex items-start justify-between mb-4 gap-1">
+          <span class="text-2xl sm:text-3xl font-black tracking-tighter uppercase text-black break-all"
+                :class="sticker.shiny ? 'text-black drop-shadow-[2px_2px_0px_#fff]' : ''">
+            {{ sticker.code }}
           </span>
+
+          <div v-if="sticker.shiny && count > 0" class="text-2xl animate-spin shrink-0" style="animation-duration: 4s;">⭐</div>
+        </div>
+
+        <div class="mb-6">
+          <div class="text-xs sm:text-sm font-black tracking-widest uppercase mb-1 text-black bg-white inline-block px-2 py-0.5 border-2 border-black shadow-[2px_2px_0px_#000]">
+            {{ sticker.category }}
+          </div>
+          <div class="mt-2" v-if="sticker.is_squad">
+            <span class="inline-block px-2 py-1 text-[10px] sm:text-xs font-black uppercase tracking-widest bg-black text-white border-2 border-black shadow-[2px_2px_0px_#ff003c]">
+              SQUAD
+            </span>
+          </div>
+        </div>
+
+        <!-- Controles de Quantidade -->
+        <div class="flex items-center justify-between bg-white border-4 border-black p-1.5 mt-auto shadow-[4px_4px_0px_#000]">
+          <button 
+            @click="handleDecrement"
+            :disabled="count === 0"
+            class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-white border-2 border-black hover:bg-black hover:text-white disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-black transition-all font-black text-2xl"
+          >
+            -
+          </button>
+
+          <div class="flex flex-col items-center justify-center px-2">
+            <span class="text-2xl sm:text-3xl font-black text-black leading-none">
+              {{ count }}
+            </span>
+          </div>
+
+          <button 
+            @click="handleIncrement"
+            class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-[#ffcf00] border-2 border-black hover:bg-black hover:text-white transition-all font-black text-2xl"
+          >
+            +
+          </button>
         </div>
       </div>
-
-      <!-- Controles de Quantidade -->
-      <div class="relative z-10 flex items-center justify-between bg-zinc-950 rounded-xl p-1.5 border border-white/5">
-        <button 
-          @click="handleDecrement"
-          :disabled="count === 0"
-          class="w-8 h-8 flex items-center justify-center rounded-lg bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-        >
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
-          </svg>
-        </button>
-
-        <span class="font-mono font-bold w-8 text-center" :class="count > 0 ? 'text-green-400' : 'text-zinc-500'">
-          {{ count }}
-        </span>
-
-        <button 
-          @click="handleIncrement"
-          class="w-8 h-8 flex items-center justify-center rounded-lg bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
-        >
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-          </svg>
-        </button>
-      </div>
+      
+      <div v-if="sticker.shiny && count > 0" class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-40 pointer-events-none mix-blend-overlay"></div>
     </div>
   </div>
 </template>
-
-<style scoped>
-@keyframes shine {
-  100% {
-    left: 125%;
-  }
-}
-
-.animate-shine {
-  animation: shine 1.5s ease-in-out infinite;
-}
-</style>

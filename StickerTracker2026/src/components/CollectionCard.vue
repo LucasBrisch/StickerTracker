@@ -30,36 +30,33 @@ const copyCode = async () => {
 <template>
   <div 
     @click="openCollection"
-    class="bg-zinc-900 border border-white/5 rounded-2xl p-6 cursor-pointer hover:border-green-500/50 hover:bg-zinc-800 transition-all duration-300 group"
+    class="bg-white border-8 border-black p-6 cursor-pointer shadow-[12px_12px_0px_#000] hover:-translate-y-2 hover:-translate-x-2 hover:shadow-[20px_20px_0px_#ff003c] transition-all duration-200 flex flex-col justify-between min-h-[260px] relative overflow-hidden"
   >
-    <div class="flex justify-between items-start mb-4">
-      <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
-        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 pointer-events-none"></div>
+
+    <div class="flex justify-between items-start mb-6 relative z-10">
+      <div class="w-20 h-20 bg-[#00e5ff] border-4 border-black shadow-[6px_6px_0px_#000] flex items-center justify-center transform -rotate-6 hover:rotate-12 transition-transform">
+        <svg class="w-10 h-10 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="3" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
         </svg>
       </div>
+      
       <div 
         @click.stop="copyCode"
-        class="flex items-center gap-2 bg-zinc-950 px-3 py-1.5 rounded-lg hover:bg-zinc-800 transition-colors cursor-copy border border-white/5 hover:border-white/20"
-        :title="copied ? 'Copiado!' : 'Copiar código de convite'"
+        class="bg-[#ffcf00] border-4 border-black px-4 py-2 font-black uppercase text-sm cursor-pointer shadow-[6px_6px_0px_#000] hover:translate-y-[2px] hover:translate-x-[2px] hover:shadow-[4px_4px_0px_#000] active:translate-y-[6px] active:translate-x-[6px] active:shadow-none transition-all flex items-center gap-2"
+        :title="copied ? 'Copiado!' : 'Copiar código'"
       >
-        <span class="text-xs font-mono font-medium transition-colors" :class="copied ? 'text-green-400' : 'text-zinc-400'">
-          Cód: {{ collection.invite_code }}
-        </span>
-        <svg v-if="copied" class="w-3.5 h-3.5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-        </svg>
-        <svg v-else class="w-3.5 h-3.5 text-zinc-500 group-hover:text-zinc-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-        </svg>
+        <span>{{ copied ? 'COPIADO' : collection.invite_code }}</span>
       </div>
     </div>
     
-    <h3 class="text-lg font-semibold text-zinc-200 mb-1 group-hover:text-green-400 transition-colors">
-      {{ collection.name }}
-    </h3>
-    <p class="text-sm text-zinc-500">
-      Criado em {{ new Date(collection.created_at).toLocaleDateString() }}
-    </p>
+    <div class="relative z-10 mt-auto">
+      <h3 class="text-3xl font-black text-black uppercase leading-none mb-4 break-words">
+        {{ collection.name }}
+      </h3>
+      <div class="inline-block bg-black text-white px-3 py-2 text-sm font-black uppercase shadow-[4px_4px_0px_#ff003c]">
+        {{ new Date(collection.created_at).toLocaleDateString() }}
+      </div>
+    </div>
   </div>
 </template>

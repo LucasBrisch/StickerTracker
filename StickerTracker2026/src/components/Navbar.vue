@@ -23,7 +23,7 @@ const handleLogout = async () => {
           </div>
           <div>
             <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-yellow-400">
-              Sticker Tracker
+              Album do hexa 2026
             </h1>
           </div>
         </router-link>

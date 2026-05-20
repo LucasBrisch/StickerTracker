@@ -10,8 +10,8 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
-        name: 'Sticker Tracker 2026',
-        short_name: 'Stickers 26',
+        name: 'Album do hexa 2026',
+        short_name: 'Hexa 2026',
         description: 'Gerenciador Colaborativo de Figurinhas',
         theme_color: '#09090b', /* background zinc-950 */
         background_color: '#09090b',

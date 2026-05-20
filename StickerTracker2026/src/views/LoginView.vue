@@ -18,7 +18,7 @@ const { loginWithGoogle } = useAuth()
       </div>
 
       <h1 class="text-3xl font-black mb-2 text-center text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-yellow-400">
-        Sticker Tracker
+        Album do hexa 2026
       </h1>
 
       <p class="text-zinc-400 mb-10 text-center">

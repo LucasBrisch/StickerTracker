@@ -60,6 +60,23 @@ export const countries = [
   'PAN',
 ]
 
+const cokePlayers = [
+  'Gabriel Magalhaes',
+  'Lamine Yamal',
+  'Harry Kane',
+  'Virgil van Dijk',
+  'Lautaro Martinez',
+  'Emiliano Martinez',
+  'Alphonso Davies',
+  'Joshua Kimmich',
+  'Federico Valverde',
+  'Josko Gvardiol',
+  'Santiago Gimenez',
+  'Raul Jimenez',
+  'Jefferson Lerma',
+  'Enner Valencia',
+]
+
 export const stickers = []
 
 stickers.push({
@@ -70,7 +87,7 @@ stickers.push({
 })
 
 // FWC 
-for (let i = 1; i <= 18; i++) {
+for (let i = 1; i <= 19; i++) {
   stickers.push({
     code: `FWC${i}`,
     category: 'FWC',
@@ -88,4 +105,16 @@ countries.forEach((country) => {
       is_squad: i === 13,
     })
   }
+})
+
+//coca-cola
+cokePlayers.forEach(player => {
+  stickers.push({
+    code: player,
+    category: 'COKE',
+
+    shiny: false,
+
+    is_squad: false,
+  })
 })

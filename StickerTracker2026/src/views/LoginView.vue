@@ -14,27 +14,26 @@ const { loginWithGoogle } = useAuth()
     <div class="w-full max-w-lg relative z-10">
       
       <!-- Login Card -->
-      <div class="bg-white border-8 border-black p-10 shadow-[24px_24px_0px_#000] transform -rotate-1">
+      <div class="bg-white border-[6px] sm:border-8 border-black p-6 sm:p-10 shadow-[16px_16px_0px_#000] sm:shadow-[24px_24px_0px_#000] transform -rotate-1">
         
-        <div class="w-28 h-28 bg-[#ffcf00] border-8 border-black shadow-[8px_8px_0px_#000] flex items-center justify-center mb-10 transform -rotate-6 mx-auto animate-bounce" style="animation-duration: 3s;">
-          <svg class="w-14 h-14 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div class="w-20 h-20 sm:w-28 sm:h-28 bg-[#ffcf00] border-[6px] sm:border-8 border-black shadow-[6px_6px_0px_#000] sm:shadow-[8px_8px_0px_#000] flex items-center justify-center mb-6 sm:mb-10 transform -rotate-6 mx-auto animate-bounce" style="animation-duration: 3s;">
+          <svg class="w-10 h-10 sm:w-14 sm:h-14 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="3" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
           </svg>
         </div>
 
-        <h1 class="text-6xl font-black mb-6 text-center tracking-tighter uppercase leading-none">
+        <h1 class="text-5xl sm:text-6xl font-black mb-4 sm:mb-6 text-center tracking-tighter uppercase leading-none">
           Hexa <br><span class="text-[#ff003c] bg-black px-4 mt-2 inline-block">2026</span>
         </h1>
-        <p class="text-black font-black text-center text-xl mb-12 uppercase border-y-8 border-black py-6 bg-[#ffcf00]">
+        <p class="text-black font-black text-center text-base sm:text-xl mb-8 sm:mb-12 uppercase border-y-4 sm:border-y-8 border-black py-4 sm:py-6 bg-[#ffcf00]">
           A febre das figurinhas voltou.<br>Colecione. Troque. Domine.
         </p>
 
         <button
           @click="loginWithGoogle"
-          class="w-full bg-[#ff003c] text-white py-5 px-6 font-black uppercase text-2xl border-8 border-black shadow-[12px_12px_0px_#000] hover:translate-y-[4px] hover:translate-x-[4px] hover:shadow-[8px_8px_0px_#000] active:translate-y-[12px] active:translate-x-[12px] active:shadow-none transition-all flex items-center justify-center gap-4 group"
+          class="w-full bg-[#ff003c] text-white py-4 sm:py-5 px-4 sm:px-6 font-black uppercase text-xl sm:text-2xl border-[6px] sm:border-8 border-black shadow-[8px_8px_0px_#000] sm:shadow-[12px_12px_0px_#000] hover:translate-y-[4px] hover:translate-x-[4px] hover:shadow-[4px_4px_0px_#000] active:translate-y-[8px] active:translate-x-[8px] active:shadow-none transition-all flex items-center justify-center group"
         >
-          <span class="bg-white text-black px-2 py-1 transform -rotate-6 group-hover:rotate-6 transition-transform">G</span>
-          Entrar pra jogar
+          Entrar com o google
         </button>
       </div>
 

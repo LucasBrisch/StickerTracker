@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 import { supabase } from '../lib/supabase'
+import { albumOrder } from '../lib/categoryMap'
 
 // Global cache for stickers catalog
 const catalogStickers = ref([])
@@ -19,15 +20,20 @@ export function useStickers(collectionId) {
       .select('*')
     
     if (data) {
-      // Sort: FWC first, then normal categories alphabetically, then COKE. Sort by code within.
+      // Sort: according to album order, then by code within.
       data.sort((a, b) => {
         if (a.category !== b.category) {
-          const weightA = a.category === 'FWC' ? -1 : (a.category === 'COKE' ? 1 : 0)
-          const weightB = b.category === 'FWC' ? -1 : (b.category === 'COKE' ? 1 : 0)
-          if (weightA !== weightB) return weightA - weightB
-          return a.category.localeCompare(b.category)
+          const indexA = albumOrder.indexOf(a.category);
+          const indexB = albumOrder.indexOf(b.category);
+          
+          // Fallback if category is not in the list (put it at the end)
+          const weightA = indexA !== -1 ? indexA : 999;
+          const weightB = indexB !== -1 ? indexB : 999;
+          
+          if (weightA !== weightB) return weightA - weightB;
+          return a.category.localeCompare(b.category);
         }
-        return a.code.localeCompare(b.code, undefined, { numeric: true })
+        return a.code.localeCompare(b.code, undefined, { numeric: true });
       })
       catalogStickers.value = data
     }
